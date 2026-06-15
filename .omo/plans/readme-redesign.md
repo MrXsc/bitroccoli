@@ -1,3 +1,16 @@
+# README Redesign — Minimal + Comparison Image
+
+## TL;DR
+Redesign README.md with a clean, minimal layout featuring a side-by-side original-vs-mosaic comparison image. Remove old standalone preview images.
+
+---
+
+## Task
+
+- [ ] 1. **Overwrite README.md with new design**
+
+  **Content to write**:
+```markdown
 <p align="center">
   <img src="logo.svg" width="48">
 </p>
@@ -50,3 +63,15 @@ See `python3 bitvibe.py --help` for all flags.
 ## License
 
 MIT
+```
+
+- [ ] 2. **Remove old standalone preview images**
+  - Delete `preview_sharp.png`
+  - Delete `preview_toys.png`
+
+- [ ] 3. **Stage, amend author, commit, push**
+  - `git add README.md`
+  - `git rm preview_sharp.png preview_toys.png`
+  - `git commit --author="MrXsc <MrXsc@users.noreply.github.com>"`
+  - If committer is wrong, run filter-branch to fix
+  - `git push`
