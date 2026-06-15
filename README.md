@@ -2,7 +2,7 @@
 
 Turn any image into a **bit-style pixel-art mosaic** — rendered in the terminal with colored ANSI symbols, also saveable as PNG.
 
-![sharp preset cat](output/output_cat_sharp.png)
+![sharp preset cat](preview_sharp.png)
 `--preset sharp` — w=120, blocks symbol set, posterize 12 colors
 
 ## Quick Start
@@ -31,7 +31,7 @@ python3 bitvibe.py --preset sharp -i photo.JPG -o mosaic.png
 
 See `python3 bitvibe.py --help` for all flags.
 
-![toys comparison](output/output_toys_fixed.png)
+![toys comparison](preview_toys.png)
 Basic render, w=80, default symbols
 
 ## License
