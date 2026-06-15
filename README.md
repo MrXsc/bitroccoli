@@ -5,8 +5,9 @@
 <h1 align="center">BitVibe</h1>
 
 <p align="center">
-  Turn any image into a bit-style pixel-art mosaic,<br>
-  rendered in the terminal with ANSI color and saveable as PNG.
+  Turn any image into a pixel-art mosaic —<br>
+  rendered in the terminal with ANSI TrueColor, saveable as PNG.<br>
+  No aspect distortion. Auto terminal-width detection.
 </p>
 
 <br>
@@ -17,31 +18,32 @@
 
 <br>
 
-## Usage
+## Presets
 
 ```bash
 pip install Pillow
 
-# Terminal render
-python3 bitvibe.py -i photo.JPG
+# Sharp pixel-art (high-res, blocks, posterize)
+python3 bitvibe.py --preset sharp -i photo.JPG
 
-# Sharp pixel-art style + PNG
-python3 bitvibe.py --preset sharp -i photo.JPG -o mosaic.png
+# Retro look (16-colour palette + dithering)
+python3 bitvibe.py --preset retro -i photo.JPG
 ```
 
-<br>
+## Quick Flags
 
-## Options
-
-| Flag | Description |
+| Flag | What it does |
 |---|---|
-| `-i`, `--input` | Input image path |
-| `-w`, `--width` | Mosaic width in tiles (default: `80`) |
-| `-s`, `--symbols` | `default` · `blocks` · `dots` · `cross` · `simple` |
-| `-o`, `--output` | Save as PNG |
-| `--preset` | `sharp` = `-w 120 -s blocks --posterize 12` |
-| `--posterize N` | Reduce to N flat colours |
-| `--edge` | Emphasize contours |
+| `-w 80` | Mosaic width (default: auto = terminal width) |
+| `--posterize 12` | Flat colour regions |
+| `--palette` | Map to a fixed palette (default: `retro`) |
+| `--palette gameboy` | Game Boy 4-shade green |
+| `--palette pico8` | PICO-8 inspired 16-colour |
+| `--list-palettes` | List all available palettes and exit |
+| `--dither` | Floyd-Steinberg dithering (w/ `--posterize`) |
+| `--gamma 2.2` | Perceptual brightness mapping |
+| `--edge` | Contour emphasis |
+| `--no-halfblock` | Fall back to symbol-per-cell mode |
 
 See `python3 bitvibe.py --help` for all flags.
 

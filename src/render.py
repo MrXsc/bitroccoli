@@ -1,8 +1,11 @@
 """
 bitvibe.render - Terminal ANSI rendering and output image saving.
 
-Supports multiple symbol sets. Each tile cell is rendered as a single
-colored symbol in the terminal using ANSI TrueColor escape codes.
+Supports two render modes:
+  - **Symbol mode** — each cell → one coloured ANSI symbol (original).
+  - **Half-block mode** — each terminal row renders two pixel rows
+    via the ▄ character, giving 2× vertical resolution and no aspect
+    distortion.
 """
 
 import sys
@@ -33,6 +36,8 @@ ANSI_RESET = "\033[0m"
 EDGE_THRESHOLD = 40.0
 
 
+
+
 def _rgb_ansi_fg(r: int, g: int, b: int) -> str:
     return f"\033[38;2;{r};{g};{b}m"
 
@@ -41,8 +46,20 @@ def _rgb_ansi_bg(r: int, g: int, b: int) -> str:
     return f"\033[48;2;{r};{g};{b}m"
 
 
-def perceived_brightness(r: int, g: int, b: int) -> float:
-    """Perceived luminance using Rec. 601 luma coefficients."""
+def perceived_brightness(r: int, g: int, b: int, gamma: float = 1.0) -> float:
+    """Perceived luminance with optional gamma correction.
+
+    Uses Rec. 601 luma coefficients.  When *gamma* != 1.0 the linear
+    sRGB values are gamma-expanded before weighting (simulating
+    perceptual uniformity).
+    """
+    if gamma != 1.0:
+        # Expand sRGB → linear, weight, then compress → perception
+        linear_r = (r / 255.0) ** gamma
+        linear_g = (g / 255.0) ** gamma
+        linear_b = (b / 255.0) ** gamma
+        linear = 0.299 * linear_r + 0.587 * linear_g + 0.114 * linear_b
+        return linear ** (1.0 / gamma) * 255.0
     return 0.299 * r + 0.587 * g + 0.114 * b
 
 
@@ -92,6 +109,7 @@ def render_terminal(
     symbol_set: str = "default",
     background: str = "dark",
     invert: bool = False,
+    gamma: float = 1.0,
     edge_mask: Optional[List[List[bool]]] = None,
     edge_symbol: str = "+",
     out=sys.stdout,
@@ -134,7 +152,7 @@ def render_terminal(
                 bg = _rgb_ansi_bg(r, g, b)
                 line_chars.append(f"{fg}{bg}{edge_symbol}{ANSI_RESET}")
             else:
-                brightness = perceived_brightness(r, g, b)
+                brightness = perceived_brightness(r, g, b, gamma=gamma)
                 idx = int(brightness / 256.0 * n_levels)
                 idx = min(idx, n_levels - 1)
                 if invert:
@@ -143,6 +161,60 @@ def render_terminal(
                 fg = _rgb_ansi_fg(r, g, b)
                 bg = _rgb_ansi_bg(*bg_rgb)
                 line_chars.append(f"{fg}{bg}{sym}{ANSI_RESET}")
+        lines.append("".join(line_chars))
+
+    out.write("\n".join(lines))
+    out.write("\n")
+    out.flush()
+
+
+# ---------------------------------------------------------------------------
+# Half-block terminal rendering  (▄  — no aspect distortion)
+# ---------------------------------------------------------------------------
+
+
+def render_terminal_halfblock(
+    colors: ColorGrid,
+    out=sys.stdout,
+) -> None:
+    """Render the colour grid as half-block mosaic.
+
+    Every **two** pixel rows become one terminal row using ``▄``:
+      - top pixel    → background colour (top half of cell)
+      - bottom pixel → foreground colour (lower half of cell)
+
+    This gives **2× vertical resolution** and **no aspect distortion**
+    because one grid cell maps to one *logical* pixel in the rendered
+    mosaic, regardless of the terminal font aspect ratio.
+    """
+    rows = len(colors)
+    cols = len(colors[0]) if rows else 0
+    if rows < 2:
+        # Fallback: single-row → render as simple colored blocks
+        return render_terminal(colors, symbol_set="blocks", out=out)
+
+    lines: List[str] = []
+    for y in range(0, rows - 1, 2):
+        top_row = colors[y]
+        bot_row = colors[y + 1]
+        line_chars: List[str] = []
+        for x in range(cols):
+            tr, tg, tb = top_row[x]
+            br, bg, bb = bot_row[x]
+            fg = _rgb_ansi_fg(br, bg, bb)
+            bg_ansi = _rgb_ansi_bg(tr, tg, tb)
+            line_chars.append(f"{fg}{bg_ansi}▄{ANSI_RESET}")
+        lines.append("".join(line_chars))
+
+    # Handle odd final row: render with black bottom
+    if rows % 2 == 1:
+        last_row = colors[-1]
+        line_chars = []
+        for x in range(cols):
+            tr, tg, tb = last_row[x]
+            fg = _rgb_ansi_fg(0, 0, 0)
+            bg_ansi = _rgb_ansi_bg(tr, tg, tb)
+            line_chars.append(f"{fg}{bg_ansi}▄{ANSI_RESET}")
         lines.append("".join(line_chars))
 
     out.write("\n".join(lines))
