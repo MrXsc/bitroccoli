@@ -17,6 +17,9 @@ env/
 .DS_Store
 Thumbs.db
 
+# OpenCode plans
+.omo/
+
 # Test / generated outputs
 output/
 output*.png
