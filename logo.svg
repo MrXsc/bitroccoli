@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 140" width="120" height="140">
+  <defs>
+    <linearGradient id="crownGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a4a1a"/>
+      <stop offset="100%" stop-color="#2d6b2d"/>
+    </linearGradient>
+    <linearGradient id="stemGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a8c3f"/>
+      <stop offset="100%" stop-color="#3a7230"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Crown — florets arranged as a perfect dome -->
+  <g fill="url(#crownGrad)">
+    <circle cx="60" cy="28" r="15"/>
+    <circle cx="60" cy="52" r="14"/>
+    <circle cx="40" cy="42" r="13"/>
+    <circle cx="80" cy="42" r="13"/>
+    <circle cx="23" cy="58" r="12"/>
+    <circle cx="97" cy="58" r="12"/>
+    <circle cx="60" cy="70" r="11"/>
+    <circle cx="38" cy="66" r="10"/>
+    <circle cx="82" cy="66" r="10"/>
+  </g>
+
+  <!-- Highlight florets (lighter) for depth -->
+  <g fill="url(#stemGrad)" opacity="0.5">
+    <circle cx="60" cy="24" r="6"/>
+    <circle cx="48" cy="38" r="4"/>
+    <circle cx="72" cy="38" r="4"/>
+  </g>
+
+  <!-- Stem -->
+  <rect x="49" y="76" width="22" height="42" rx="8" fill="url(#stemGrad)"/>
+
+  <!-- Stem highlight -->
+  <rect x="55" y="80" width="6" height="30" rx="3" fill="#5aa04d" opacity="0.4"/>
+
+  <!-- Pixel grid accent (bit-style reference) -->
+  <g fill="#2d6b2d" opacity="0.08">
+    <rect x="0" y="0" width="4" height="4"/>
+    <rect x="8" y="0" width="4" height="4"/>
+    <rect x="16" y="0" width="4" height="4"/>
+    <rect x="24" y="0" width="4" height="4"/>
+    <rect x="32" y="0" width="4" height="4"/>
+    <rect x="40" y="0" width="4" height="4"/>
+    <rect x="48" y="0" width="4" height="4"/>
+    <rect x="56" y="0" width="4" height="4"/>
+    <rect x="64" y="0" width="4" height="4"/>
+    <rect x="72" y="0" width="4" height="4"/>
+    <rect x="80" y="0" width="4" height="4"/>
+    <rect x="88" y="0" width="4" height="4"/>
+    <rect x="96" y="0" width="4" height="4"/>
+    <rect x="104" y="0" width="4" height="4"/>
+    <rect x="112" y="0" width="4" height="4"/>
+    <rect x="0" y="8" width="4" height="4"/>
+    <rect x="0" y="16" width="4" height="4"/>
+    <rect x="0" y="24" width="4" height="4"/>
+    <rect x="0" y="32" width="4" height="4"/>
+    <rect x="0" y="40" width="4" height="4"/>
+    <rect x="0" y="48" width="4" height="4"/>
+    <rect x="0" y="56" width="4" height="4"/>
+    <rect x="0" y="64" width="4" height="4"/>
+    <rect x="0" y="72" width="4" height="4"/>
+    <rect x="0" y="80" width="4" height="4"/>
+    <rect x="0" y="88" width="4" height="4"/>
+    <rect x="0" y="96" width="4" height="4"/>
+    <rect x="0" y="104" width="4" height="4"/>
+    <rect x="0" y="112" width="4" height="4"/>
+    <rect x="0" y="120" width="4" height="4"/>
+    <rect x="0" y="128" width="4" height="4"/>
+    <rect x="116" y="0" width="4" height="4"/>
+    <rect x="116" y="8" width="4" height="4"/>
+    <rect x="116" y="16" width="4" height="4"/>
+    <rect x="116" y="24" width="4" height="4"/>
+    <rect x="116" y="32" width="4" height="4"/>
+    <rect x="116" y="40" width="4" height="4"/>
+    <rect x="116" y="48" width="4" height="4"/>
+    <rect x="116" y="56" width="4" height="4"/>
+    <rect x="116" y="64" width="4" height="4"/>
+    <rect x="116" y="72" width="4" height="4"/>
+    <rect x="116" y="80" width="4" height="4"/>
+    <rect x="116" y="88" width="4" height="4"/>
+    <rect x="116" y="96" width="4" height="4"/>
+    <rect x="116" y="104" width="4" height="4"/>
+    <rect x="116" y="112" width="4" height="4"/>
+    <rect x="116" y="120" width="4" height="4"/>
+    <rect x="116" y="128" width="4" height="4"/>
+  </g>
+</svg>

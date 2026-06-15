@@ -1,4 +1,4 @@
-# BitVibe
+# BitVibe <img src="logo.svg" width="32" align="left" style="margin-right: 8px; margin-top: 4px;">
 
 Turn any image into a **bit-style pixel-art mosaic** — rendered in the terminal with colored ANSI symbols, also saveable as PNG.
 
